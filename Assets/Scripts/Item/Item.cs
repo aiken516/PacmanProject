@@ -5,6 +5,7 @@ public abstract class Item : MonoBehaviour
 {
     [SerializeField] private int _score = 0;
     [SerializeField] private GameObject _particle;
+    [SerializeField] private GameObject _sound;
 
     protected void Start()
     {
@@ -15,11 +16,17 @@ public abstract class Item : MonoBehaviour
     {
         if (other.tag == "Player")
         {
+            GameObject sfx = Instantiate(_sound);
+            sfx.SetActive(true);
+            sfx.transform.position = transform.position;
+
+            Instantiate(_particle, transform.position + Vector3.up, Quaternion.identity);
+
             PlayerItem playerItem = other.gameObject.GetComponent<PlayerItem>();
             GetItem(playerItem);
-            GameManager.Instance.Field.RemoveItem(new Vector2(transform.position.x, transform.position.z));
             GameManager.Instance.AddScore(_score);
-            Instantiate(_particle, transform.position + Vector3.up, Quaternion.identity);
+
+            GameManager.Instance.Field.RemoveItem(new Vector2(transform.position.x, transform.position.z));
         }
     }
 

@@ -21,6 +21,7 @@ public class PlayerBoom : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             CreateBoom();
+            GetComponent<PlayerAnimation>().SetTrigger("Attack");
         }
     }
 
@@ -30,6 +31,8 @@ public class PlayerBoom : MonoBehaviour
         {
             return;
         }
+
+        GetComponent<PlayerSound>().BoomSettingSFX.Play();
 
         int x = Mathf.RoundToInt(transform.position.x);
         int z = Mathf.RoundToInt(transform.position.z);

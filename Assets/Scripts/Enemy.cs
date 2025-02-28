@@ -5,6 +5,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private GameObject _enemyModel;
     [SerializeField] private GameObject _particle;
     [SerializeField] private float _speed = 3.0f;
+    [SerializeField] private GameObject _deadSFX;
 
     private GameObject _player;
 
@@ -82,6 +83,11 @@ public class Enemy : MonoBehaviour
     {
         Instantiate(_particle, transform.position + Vector3.up, Quaternion.identity);
         GameManager.Instance.AddScore(500);
+
+        GameObject sfx = Instantiate(_deadSFX);
+        sfx.SetActive(true);
+        sfx.transform.position = transform.position;
+
         Destroy(gameObject);
     }
 }

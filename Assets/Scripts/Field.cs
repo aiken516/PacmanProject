@@ -128,11 +128,19 @@ public class Field : MonoBehaviour
         }
     }
 
-    public void CreateItem(Vector2 position, ItemType type)
+    public bool CreateItem(Vector2 position, ItemType type)
     {
         if (CheckItem(position))
         {
-            return;
+            return false;
+        }
+
+        if (CheckBlock(position))
+        {
+            if (GetBlock(position).Type == BlockType.Metal)
+            {
+                return false;
+            }
         }
 
         GameObject itemObject = Instantiate(_itemPrefabList[(int)type]);
@@ -142,6 +150,8 @@ public class Field : MonoBehaviour
         Item item = itemObject.GetComponent<Item>();
 
         _itemDict.Add(position, item);
+
+        return true;
     }
 
     public void RemoveItem(Vector2 position)
@@ -152,16 +162,18 @@ public class Field : MonoBehaviour
         Destroy(removeItem);
     }
 
-    public void CreateEnemy(Vector2 position)
+    public bool CreateEnemy(Vector2 position)
     {
         if (CheckItem(position) || CheckBlock(position))
         {
-            return;
+            return false;
         }
 
         GameObject enemyObject = Instantiate(_enemyPrefab);
 
         enemyObject.transform.position = new Vector3(position.x, 0, position.y);
+
+        return true;
     }
 
     public void CreateStage()

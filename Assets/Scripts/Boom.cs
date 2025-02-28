@@ -5,6 +5,7 @@ using UnityEngine.UIElements;
 public class Boom : MonoBehaviour
 {
     [SerializeField] GameObject _boomRangePrefab;
+    [SerializeField] GameObject _boomSFX;
 
     private PlayerBoom _playerBoom = null;
     public Vector2 Position => _position;
@@ -50,6 +51,10 @@ public class Boom : MonoBehaviour
             GameObject boomRange = Instantiate(_boomRangePrefab);
             boomRange.transform.position = new Vector3(range.x, 0, range.y);
         }
+
+        GameObject sfx = Instantiate(_boomSFX);
+        sfx.SetActive(true);
+        sfx.transform.position = transform.position;
 
         _playerBoom.BoomDestroyed(this);
         Destroy(gameObject);

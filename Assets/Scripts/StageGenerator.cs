@@ -39,27 +39,22 @@ public class StageGenerator : MonoBehaviour
         }
 
         //아이템 생성
-        for (int i = 0; i < 8; i++)
+        for (int i = 0; i < 6; i++)
         {
             int randomNum = Random.Range(0, 3);
-
-            if (randomNum == 0)
+            ItemType randomItem = (ItemType)randomNum;
+            if (!GameManager.Instance.Field.CreateItem(RandomPosition(CurrentPosition), randomItem))
             {
-                GameManager.Instance.Field.CreateItem(RandomPosition(CurrentPosition), ItemType.ExtraBoom);
-            }
-            else if (randomNum == 1)
-            {
-                GameManager.Instance.Field.CreateItem(RandomPosition(CurrentPosition), ItemType.ExplosionPower);
-            }
-            else
-            {
-                GameManager.Instance.Field.CreateItem(RandomPosition(CurrentPosition), ItemType.Score);
+                i--;
             }
         }
 
         for (int i = 0; i < 3; i++)
         { 
-            GameManager.Instance.Field.CreateEnemy(RandomPosition(CurrentPosition));
+            if (!GameManager.Instance.Field.CreateEnemy(RandomPosition(CurrentPosition)))
+            {
+                i--;
+            }
         }
     }
 

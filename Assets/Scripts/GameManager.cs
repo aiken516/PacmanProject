@@ -51,6 +51,7 @@ public class GameManager : MonoBehaviour
         UIManager.SetGameOverUI();
         IsPlay = false;
         GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerAnimation>().SetTrigger("Die");
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerSound>().DeadSFX.Play();
         _gameOverScroll.SetActive(false);
     }
 
